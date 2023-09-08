@@ -1,24 +1,32 @@
 import io
-def returnByte(filename):
-    with open(filename, "rb") as f:
-        return f.read()
+class Download(io):
+    def __init__(self):
+        self.name = "App"
+        self.version = "0.0.1"
+        self.author = "Tusher Mondal"
+        self.email = "luciefer9062hurley@gmail.com"
+        self.usage = "Free for All"
 
-def returnFile(ByteObject):
-    return io.BytesIO(ByteObject)
+    def returnByte(self, filename):
+        with open(filename, "rb") as f:
+            return f.read()
 
-
-def saveByte(ByteObject, filename):
-    with open(filename, "wb") as f:
-        f.write(ByteObject)
-        f.close()
-
-def fileSizeinBytes(filename):
-    with open(filename, "rb") as f:
-        return len(f.read())
+    def returnFile(self, ByteObject):
+        return io.BytesIO(ByteObject)
 
 
-def splitByte(ByteObject, n):
-    return [ByteObject[i:i+n] for i in range(0, len(ByteObject), n)]
+    def saveByte(self, ByteObject, filename):
+        with open(filename, "wb") as f:
+            f.write(ByteObject)
+            f.close()
 
-def combineByte(ByteObjectArray):
-    return b''.join(ByteObjectArray)
+    def fileSizeinBytes(self, filename):
+        with open(filename, "rb") as f:
+            return len(f.read())
+
+
+    def splitByte(self, ByteObject, n):
+        return [ByteObject[i:i+n] for i in range(0, len(ByteObject), n)]
+
+    def combineByte(self, ByteObjectArray):
+        return b''.join(ByteObjectArray)
