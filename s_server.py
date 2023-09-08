@@ -1,5 +1,5 @@
 import socket
-import Additional_Function as AF
+from Additional_Function import Download
 
 SERVER_ADDRESS = '127.0.0.1'
 SERVER_PORT = 5000
@@ -12,12 +12,25 @@ Server_Socket.listen(1)
 
 Client_Socket, Client_Address = Server_Socket.accept()
 
+Greet = Client_Socket.recv(1024).decode()
+
+if Greet == "SnehoJoggo":
+    Client_Socket.send("Hello from Server".encode())
+else:
+    Client_Socket.send("CCReq".encode())
+    Server_Socket.close()
+
+
+
+
+
+
 Filename = Client_Socket.recv(1024).decode()
 
-FileSize = AF.fileSizeinBytes(Filename)
-ByteFile = AF.returnByte(Filename)
+FileSize = Download.fileSizeinBytes(Filename)
+ByteFile = Download.returnByte(Filename)
 
-Chunks = AF.splitByte(ByteFile, 65536)
+Chunks = Download.splitByte(ByteFile, 65536)
 
 for chunk in Chunks:
     Client_Socket.send(chunk)

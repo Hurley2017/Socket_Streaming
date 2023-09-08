@@ -1,7 +1,7 @@
 import io
-class Download(io):
+class Transfer(io):
     def __init__(self):
-        self.name = "App"
+        self.name = "Additional_Function"
         self.version = "0.0.1"
         self.author = "Tusher Mondal"
         self.email = "luciefer9062hurley@gmail.com"
@@ -30,3 +30,25 @@ class Download(io):
 
     def combineByte(self, ByteObjectArray):
         return b''.join(ByteObjectArray)
+
+class Reader:
+    def __init__(self):
+        self.name = "Additional_Function"
+        self.version = "0.0.1"
+        self.author = "Tusher Mondal"
+        self.email = "luciefer9062hurley@gmail.com"
+        self.usage = "Free for All"
+        self.Instructions = "\n\nChoose from the following : \n1. Download\n2. Upload\n3. Exit\n\n"
+    
+    def readFiles(self, Files):
+        print("Choose from the following : ")
+        i = 1
+        for file in Files:
+            print(str(i)+')', file)
+            i += 1
+    
+    def readInstruction(self):
+        print(self.Instructions)
+    
+    def readERROR(self, ERROR):
+        print("[ERROR] "+ ERROR)
