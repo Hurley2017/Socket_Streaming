@@ -43,19 +43,8 @@ else:
         Transfer.saveByte(ByteFile, FileName.split(".")[0]+"copy."+FileName.split(".")[1])
         
     elif User_Response == '2':
-        Client_Socket.send("Upload".encode())
+        Client_Socket.close()
     else:
         Client_Socket.close()
-        exit()
 
 
-Filename = 'file12.webm'
-
-Client_Socket.send(Filename.encode())
-
-
-
-
-
-
-Client_Socket.close()

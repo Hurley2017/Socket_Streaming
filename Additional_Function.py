@@ -1,5 +1,5 @@
-import io
-class Transfer(io):
+import io, os
+class Transfer:
     def __init__(self):
         self.name = "Additional_Function"
         self.version = "0.0.1"
@@ -30,6 +30,11 @@ class Transfer(io):
 
     def combineByte(self, ByteObjectArray):
         return b''.join(ByteObjectArray)
+    
+    def listFile(self):
+        files = os.listdir('Server')
+        files = ",".join(files)
+        return files
 
 class Reader:
     def __init__(self):

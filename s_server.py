@@ -1,5 +1,5 @@
 import socket
-from Additional_Function import Download
+from Additional_Function import Transfer, Reader
 
 SERVER_ADDRESS = '127.0.0.1'
 SERVER_PORT = 5000
@@ -16,6 +16,21 @@ Greet = Client_Socket.recv(1024).decode()
 
 if Greet == "SnehoJoggo":
     Client_Socket.send("Hello from Server".encode())
+    Receipt = Client_Socket.recv(1024).decode()
+    if Receipt == "Download":
+        Files = Transfer.listFile()
+        Client_Socket.send(Files.encode())
+        FileName = Client_Socket.recv(1024).decode()
+        FileSize = Transfer.fileSizeinBytes(FileName)
+        ByteFile = Transfer.returnByte(FileName)
+        Chunks = Transfer.splitByte(ByteFile, 65536)
+        for Chunk in Chunks:
+            Client_Socket.send(Chunk)
+            print("Sent: " + str(len(Chunk)) + " bytes")
+        Client_Socket.send("EOF".encode())
+        Server_Socket.close()
+    else:
+        Server_Socket.close()
 else:
     Client_Socket.send("CCReq".encode())
     Server_Socket.close()
@@ -25,16 +40,3 @@ else:
 
 
 
-Filename = Client_Socket.recv(1024).decode()
-
-FileSize = Download.fileSizeinBytes(Filename)
-ByteFile = Download.returnByte(Filename)
-
-Chunks = Download.splitByte(ByteFile, 65536)
-
-for chunk in Chunks:
-    Client_Socket.send(chunk)
-    print("Sent: " + str(len(chunk)) + " bytes")
-Client_Socket.send("EOF".encode())
-
-Server_Socket.close()
