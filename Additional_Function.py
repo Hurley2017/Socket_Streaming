@@ -7,21 +7,21 @@ class Transfer:
         self.email = "luciefer9062hurley@gmail.com"
         self.usage = "Free for All"
 
-    def returnByte(self, filename):
-        with open(filename, "rb") as f:
+    def returnByte(self, filename, Path):
+        with open(Path+"/"+filename, "rb") as f:
             return f.read()
 
     def returnFile(self, ByteObject):
         return io.BytesIO(ByteObject)
 
 
-    def saveByte(self, ByteObject, filename):
-        with open(filename, "wb") as f:
+    def saveByte(self, ByteObject, filename, Path):
+        with open(Path+"/"+filename, "wb") as f:
             f.write(ByteObject)
             f.close()
 
-    def fileSizeinBytes(self, filename):
-        with open(filename, "rb") as f:
+    def fileSizeinBytes(self, filename, Path):
+        with open(Path+"/"+filename, "rb") as f:
             return len(f.read())
 
 
@@ -31,8 +31,9 @@ class Transfer:
     def combineByte(self, ByteObjectArray):
         return b''.join(ByteObjectArray)
     
-    def listFile(self):
-        files = os.listdir('Server')
+    def listFile(self, Path):
+        files = os.listdir(Path)
+        print(files)
         files = ",".join(files)
         return files
 

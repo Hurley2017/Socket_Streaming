@@ -1,6 +1,9 @@
 import socket
 from Additional_Function import Transfer, Reader
 
+Transfer = Transfer()
+Reader = Reader()
+
 SERVER_ADDRESS = '127.0.0.1'
 SERVER_PORT = 5000
 
@@ -25,7 +28,7 @@ else:
         Files = Files.split(",")
         Reader.readFiles(Files)
         while True:
-            File_Input = input("Enter your choice : ")
+            File_Input = int(input("Enter your choice : "))
             if File_Input <= len(Files):
                 FileName = Files[int(File_Input)-1]
                 break
@@ -40,7 +43,7 @@ else:
             Chunks.append(Hello)
             print("Received: " + str(len(Hello)) + " bytes")
         ByteFile = Transfer.combineByte(Chunks)
-        Transfer.saveByte(ByteFile, FileName.split(".")[0]+"copy."+FileName.split(".")[1])
+        Transfer.saveByte(ByteFile, FileName, "Client")
         
     elif User_Response == '2':
         Client_Socket.close()
