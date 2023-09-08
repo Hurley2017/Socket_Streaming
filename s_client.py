@@ -8,9 +8,7 @@ SERVER_ADDRESS = input("Enter Server Address : ")
 SERVER_PORT = 5000
 
 Client_Socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
 Client_Socket.connect((SERVER_ADDRESS, SERVER_PORT))
-
 Client_Socket.send("SnehoJoggo".encode())
 
 Receipt = Client_Socket.recv(1024).decode()
@@ -44,7 +42,7 @@ else:
             print("Received: " + str(len(Hello)) + " bytes")
         ByteFile = Transfer.combineByte(Chunks)
         Transfer.saveByte(ByteFile, FileName, "Client")
-        
+        Client_Socket.close()
     elif User_Response == '2':
         Client_Socket.send("Upload".encode())
         Files = Transfer.listFile("Client")
