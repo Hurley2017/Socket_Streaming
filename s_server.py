@@ -11,6 +11,7 @@ SERVER_PORT = 5000
 Server_Socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 Server_Socket.bind((SERVER_ADDRESS, SERVER_PORT))
 Server_Socket.listen(1)
+print("Server is ready and listening for Clients...")
 
 def Process(Client_Socket, Client_Address):
     print("Connection Established with " + str(Client_Address))
@@ -19,21 +20,21 @@ def Process(Client_Socket, Client_Address):
         Client_Socket.send("Hello from Server".encode())
         Receipt = Client_Socket.recv(1024).decode()
         if Receipt == "Download":
+            Files = Transfer.listFile('Server')
+            Client_Socket.send(Files.encode())
+            FileName = Client_Socket.recv(1024).decode()
+            FileSize = Transfer.fileSizeinBytes(FileName, "Server")
+            ByteFile = Transfer.returnByte(FileName, "Server")
+            Chunks = Transfer.splitByte(ByteFile, 65536)
+            print("Sending : " + FileName + " to " + str(Client_Address) + " ...")
+            for Chunk in Chunks:
+                Client_Socket.send(Chunk)
+            Client_Socket.send("EOF".encode())
+            print(str(FileSize) + " bytes sent")
             try:
-                Files = Transfer.listFile('Server')
-                Client_Socket.send(Files.encode())
-                FileName = Client_Socket.recv(1024).decode()
-                FileSize = Transfer.fileSizeinBytes(FileName, "Server")
-                ByteFile = Transfer.returnByte(FileName, "Server")
-                Chunks = Transfer.splitByte(ByteFile, 65536)
-                print("Sending : " + FileName + " to " + str(Client_Address) + " ...")
-                for Chunk in Chunks:
-                    Client_Socket.send(Chunk)
-                    print("Sent: " + str(len(Chunk)) + " bytes")
-                Client_Socket.send("EOF".encode())
-                print(FileSize + " bytes sent")
+                pass
             except:
-                Server_Socket.close()
+                print("Failed to send...")
         elif Receipt == "Upload":
             FileName = Client_Socket.recv(1024).decode()
             Chunks = []
@@ -49,7 +50,7 @@ def Process(Client_Socket, Client_Address):
                 FileSize = Transfer.fileSizeinBytes(FileName, "Server")
                 print(str(FileSize) + " bytes received")
             except:
-                print("Failed to send...")
+                print("Failed to Receive...")
             
     else:
         Client_Socket.send("CCReq".encode())
