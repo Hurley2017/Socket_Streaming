@@ -4,7 +4,7 @@ from Additional_Function import Transfer, Reader
 Transfer = Transfer()
 Reader = Reader()
 
-SERVER_ADDRESS = '127.0.0.1'
+SERVER_ADDRESS = input("Enter Server Address : ")
 SERVER_PORT = 5000
 
 Client_Socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
