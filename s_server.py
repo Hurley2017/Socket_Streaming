@@ -20,19 +20,18 @@ def Process(Client_Socket, Client_Address):
         Client_Socket.send("Hello from Server".encode())
         Receipt = Client_Socket.recv(1024).decode()
         if Receipt == "Download":
-            Files = Transfer.listFile('Server')
-            Client_Socket.send(Files.encode())
-            FileName = Client_Socket.recv(1024).decode()
-            FileSize = Transfer.fileSizeinBytes(FileName, "Server")
-            ByteFile = Transfer.returnByte(FileName, "Server")
-            Chunks = Transfer.splitByte(ByteFile, 65536)
-            print("Sending : " + FileName + " to " + str(Client_Address) + " ...")
-            for Chunk in Chunks:
-                Client_Socket.send(Chunk)
-            Client_Socket.send("EOF".encode())
-            print(str(FileSize) + " bytes sent")
             try:
-                pass
+                Files = Transfer.listFile('Server')
+                Client_Socket.send(Files.encode())
+                FileName = Client_Socket.recv(1024).decode()
+                FileSize = Transfer.fileSizeinBytes(FileName, "Server")
+                ByteFile = Transfer.returnByte(FileName, "Server")
+                Chunks = Transfer.splitByte(ByteFile, 65536)
+                print("Sending : " + FileName + " to " + str(Client_Address) + " ...")
+                for Chunk in Chunks:
+                    Client_Socket.send(Chunk)
+                Client_Socket.send("EOF".encode())
+                print(str(FileSize) + " bytes sent")
             except:
                 print("Failed to send...")
         elif Receipt == "Upload":
