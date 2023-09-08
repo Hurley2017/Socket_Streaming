@@ -46,6 +46,25 @@ else:
         Transfer.saveByte(ByteFile, FileName, "Client")
         
     elif User_Response == '2':
+        Client_Socket.send("Upload".encode())
+        Files = Transfer.listFile("Client")
+        Files = Files.split(",")
+        Reader.readFiles(Files)
+        while True:
+            File_Input = int(input("Enter your choice : "))
+            if File_Input <= len(Files):
+                FileName = Files[int(File_Input)-1]
+                break
+            else:
+                Reader.readERROR("Invalid Input")
+        Client_Socket.send(FileName.encode())
+        FileSize = Transfer.fileSizeinBytes(FileName, "Client")
+        ByteFile = Transfer.returnByte(FileName, "Client")
+        Chunks = Transfer.splitByte(ByteFile, 65536)
+        for Chunk in Chunks:
+            Client_Socket.send(Chunk)
+            print("Sent: " + str(len(Chunk)) + " bytes")
+        Client_Socket.send("EOF".encode())
         Client_Socket.close()
     else:
         Client_Socket.close()

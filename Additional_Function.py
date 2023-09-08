@@ -33,7 +33,6 @@ class Transfer:
     
     def listFile(self, Path):
         files = os.listdir(Path)
-        print(files)
         files = ",".join(files)
         return files
 

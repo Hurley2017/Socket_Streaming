@@ -31,12 +31,22 @@ if Greet == "SnehoJoggo":
             Client_Socket.send(Chunk)
             print("Sent: " + str(len(Chunk)) + " bytes")
         Client_Socket.send("EOF".encode())
-        Server_Socket.close()
+    elif Receipt == "Upload":
+        FileName = Client_Socket.recv(1024).decode()
+        Chunks = []
+        while True:
+            Hello = Client_Socket.recv(65536)
+            if len(Hello) == 0:
+                break
+            Chunks.append(Hello)
+            print("Received: " + str(len(Hello)) + " bytes")
+        ByteFile = Transfer.combineByte(Chunks)
+        Transfer.saveByte(ByteFile, FileName, "Server")
     else:
         Server_Socket.close()
 else:
     Client_Socket.send("CCReq".encode())
-    Server_Socket.close()
+Server_Socket.close()
 
 
 
