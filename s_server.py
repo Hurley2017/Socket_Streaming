@@ -37,7 +37,7 @@ def Process(Client_Socket, Client_Address):
         elif Receipt == "Upload":
             FileName = Client_Socket.recv(1024).decode()
             Chunks = []
-            print("Receiving : " + FileName + " to " + str(Client_Address) + " ...")
+            print("Receiving : " + FileName + " from " + str(Client_Address) + " ...")
             try:
                 while True:
                     Hello = Client_Socket.recv(65536)
