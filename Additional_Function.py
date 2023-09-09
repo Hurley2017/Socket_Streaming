@@ -1,4 +1,5 @@
 import io, os
+from pydub import AudioSegment
 class Transfer:
     def __init__(self):
         self.name = "Additional_Function"
@@ -14,7 +15,11 @@ class Transfer:
     def returnFile(self, ByteObject):
         return io.BytesIO(ByteObject)
 
-
+    def any2WAV(self, filename, Path):
+        sound = AudioSegment.from_mp3(Path+"/"+filename)
+        sound.export(Path+"/"+filename.split('.')[0]+".wav", format="wav")
+        return filename.split('.')[0]+".wav"
+    
     def saveByte(self, ByteObject, filename, Path):
         with open(Path+"/"+filename, "wb") as f:
             f.write(ByteObject)
