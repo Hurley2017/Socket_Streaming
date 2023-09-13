@@ -46,13 +46,14 @@ def Process(Client_Socket, Client_Address):
                 Chunks = []
                 while True:
                     if len(Chunks) == int(Package_Information[0])-1:
-                        Chunk = Client_Socket.recv(int(Package_Information[1]))
+                        Chunk = Client_Socket.recv(int(Package_Information[1]), socket.MSG_WAITALL)
                         Chunks.append(Chunk)
                         break
-                    Chunk = Client_Socket.recv(PACKAGE_BYTE_LENGTH) 
+                    Chunk = Client_Socket.recv(PACKAGE_BYTE_LENGTH, socket.MSG_WAITALL) 
                     Chunks.append(Chunk)
                 ByteFile = Transfer.combineByte(Chunks)
                 Transfer.saveByte(ByteFile, FileName, "Server")
+                FileSize = Transfer.fileSizeinBytes(FileName, "Server")
                 print("Received : " + str(FileSize) + " bytes successfully from " + str(Client_Address) + ".")
             except:
                 print("Failed to Receive...")
