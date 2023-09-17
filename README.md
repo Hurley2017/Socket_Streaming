@@ -1,4 +1,9 @@
 # Socket_Streaming
 Cannot say If I stay dedicated to this project.
 Sharing Files Cross Platform is Done... 
-Now I am up to music streaming from server to client.
+##How does it work?
+Client connects to the server, Server accepts connection, creates a thread to proceed further, Client asks for available files to download, Server sends a list, Client chooses filename from the list and sends back to server, Server opens the chosen file, converts into bytefile (which is more proper to split and send over network), segments this bytefile to transfer them via packets chunk by chunk, synchronizes with client.
+Client accepts those chunks, when transfer is finished, Client merges the packets, gets a bytefile, renders it to file and saves. Easy right? NO... WRONG
+##Now is it perfect?
+No, there are a big issue where It fails to deliver very large files. I am talking about files larger than your available RAM. Sounds weird but let me explain.
+So, when Server opens the chosen file, it converts the file into a bytestream and saves into memory(RAM) temporarily. Because the large bytestream needs splitting so that Server can transfer those little chunks over network via packets, forcibly storing in RAM is best option for now (If not please connect with me and suggest). Now imagine you have a 2 GB file, the whole 2 GB in bytestream will be converted and stored in RAM. untill it gets fully transferred to the Client. Similarly Client faces the same issue while receiving the files. Similarly the Client gets the packets which is primaarily stored into the RAM, later merged into a big bytestream, then actual file is rendered. The intermediate processes forces my program to eat a lot of memory space. Although the program is very light in CPU usage, still the memory eating things needs to be fixed. While I stay dedicated for newer methods to fix this. Any kind of suggestions will do good. thanks....
