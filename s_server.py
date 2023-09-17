@@ -60,6 +60,7 @@ def Process(Client_Socket, Client_Address):
     else:
         Client_Socket.send("CCReq".encode())
 
+
 while True:
     Client_Socket, Client_Address = Server_Socket.accept()
     threading.Thread(target=Process, args=(Client_Socket, Client_Address)).start()

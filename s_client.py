@@ -84,5 +84,3 @@ else:
             Client_Socket.close()
     else:
         Client_Socket.close()
-
-
