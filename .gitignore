@@ -5,4 +5,9 @@
 *.pdf
 *.pyc
 *.deb
+*.exe
+*.msi
+*.zip
+*.rar
+*.jpg
 Additional_Function.pyc
